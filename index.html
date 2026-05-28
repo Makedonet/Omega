@@ -264,7 +264,8 @@
       background: var(--primary-color);
       border-radius: 50%;
       width: 50px; height: 50px;
-      box-shadow: 0 4px 15px rgba(22, 44, 189, 0.4);
+      /* Two-layer shadow: depth (always visible) + glow (animates on hover) */
+      box-shadow: 0 4px 15px rgba(22, 44, 189, 0.4), 0 0 0 0 rgba(255, 255, 255, 0);
       transition: var(--transition);
     }
     .swiper-button-next:after, .swiper-button-prev:after { font-size: 20px; font-weight: 700; }
@@ -272,7 +273,7 @@
       .swiper-button-next:hover, .swiper-button-prev:hover {
         color: var(--primary-color);
         background: var(--text-light);
-        box-shadow: 0px 0px 20px 5px rgba(255, 255, 255, 0.5);
+        box-shadow: 0 4px 15px rgba(22, 44, 189, 0.4), 0 0 20px 5px rgba(255, 255, 255, 0.5);
       }
     }
 
@@ -368,7 +369,8 @@
       border-radius: 50%;
       display: flex; justify-content: center; align-items: center;
       cursor: pointer; border: none; outline: none;
-      box-shadow: 0 4px 15px rgba(22, 44, 189, 0.4);
+      /* Two-layer shadow: depth (always visible) + glow (animates on hover) */
+      box-shadow: 0 4px 15px rgba(22, 44, 189, 0.4), 0 0 0 0 rgba(255, 255, 255, 0);
       transition: var(--transition);
       position: relative;
       -webkit-appearance: none;
@@ -379,16 +381,19 @@
 
     .messenger-widget.open .messenger-fab {
       background-color: #FF4053;
-      box-shadow: 0 4px 15px rgba(255, 64, 83, 0.4);
+      box-shadow: 0 4px 15px rgba(255, 64, 83, 0.4), 0 0 0 0 rgba(255, 255, 255, 0);
     }
     .messenger-widget.open .messenger-fab .icon-chat { opacity: 0; transform: rotate(90deg); }
     .messenger-widget.open .messenger-fab .icon-close { opacity: 1; transform: rotate(0); }
 
     @media (hover: hover) {
-      .messenger-fab:hover,
+      .messenger-fab:hover {
+        background-color: var(--text-light);
+        box-shadow: 0 4px 15px rgba(22, 44, 189, 0.4), 0 0 20px 5px rgba(255, 255, 255, 0.5);
+      }
       .messenger-widget.open .messenger-fab:hover {
         background-color: var(--text-light);
-        box-shadow: 0px 0px 20px 5px rgba(255, 255, 255, 0.5);
+        box-shadow: 0 4px 15px rgba(255, 64, 83, 0.4), 0 0 20px 5px rgba(255, 255, 255, 0.5);
       }
       .messenger-fab:hover .icon-chat { fill: var(--primary-color); }
       .messenger-fab:hover .icon-close { color: var(--primary-color); }
