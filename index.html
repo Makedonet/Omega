@@ -344,6 +344,15 @@
     .messenger-widget.open .messenger-fab .icon-chat { opacity: 0; transform: rotate(90deg); }
     .messenger-widget.open .messenger-fab .icon-close { opacity: 1; transform: rotate(0); }
 
+    .messenger-fab:hover,
+    .messenger-widget.open .messenger-fab:hover {
+      animation: none;
+      background-color: var(--text-light);
+      box-shadow: 0px 0px 20px 5px rgba(255, 255, 255, 0.5);
+    }
+    .messenger-fab:hover .icon-chat { fill: var(--primary-color); }
+    .messenger-fab:hover .icon-close { color: var(--primary-color); }
+
     .messenger-links {
       position: absolute;
       bottom: 75px;
