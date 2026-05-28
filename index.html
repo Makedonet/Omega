@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Демо-макет лендинга для частного детективного агентства. Портфолио-работа: vanilla JS, адаптивная вёрстка, модальные окна, карусель отзывов на Swiper.">
+  <title>Частное детективное агентство «ОМЕГА» — демо-портфолио</title>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Частное детективное агентство «ОМЕГА» — демо-портфолио">
+  <meta property="og:description" content="Демо-макет лендинга. Адаптивная вёрстка, модальные окна, карусель отзывов на Swiper, форма обратной связи.">
+  <meta property="og:image" content="img/BG.webp">
+  
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+  
+  <!-- Современный Swiper.js -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <!-- Микроразметка JSON-LD для SEO и ИИ-поиска (AIO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Детективное агентство ОМЕГА — демо",
+    "description": "Демонстрационный лендинг (портфолио-работа). Не является сайтом реальной организации.",
+    "inLanguage": "ru"
+  }
+  </script>
+
+  <style>
+    /* Современный CSS с переменными */
+    :root {
+      --primary-color: #162CBD;
+      --primary-hover: rgba(22, 44, 189, 0.8);
+      --success-color: rgb(20, 211, 20);
+      --bg-light: #f5f5f5;
+      --bg-gray: #d0d1d330;
+      --text-dark: #000000;
+      --text-light: #ffffff;
+      --font-main: "Montserrat", sans-serif;
+      --transition: all 0.3s ease-in-out;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    
+    html {
+      scrollbar-gutter: stable;
+    }
+
+    body {
+      font-family: var(--font-main);
+      margin: 0;
+      line-height: 1.5;
+      color: var(--text-dark);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    button:focus { outline: none; }
+
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track-piece { background-color: var(--text-dark); }
+    ::-webkit-scrollbar-thumb:vertical { background-color: var(--text-light); }
+
+    ul[role='menu'], ol[role='menu'] { list-style: none; padding: 0; margin: 0; }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: var(--text-dark); text-decoration: none; }
+    
+    h1, h2, h3 { margin: 0; }
+    h2 { font-size: clamp(28px, 4vw, 45px); font-weight: 800; text-align: center; line-height: 1.2; }
+    textarea { font-family: var(--font-main); }
+
+    .container { max-width: 1350px; width: 100%; margin: 0 auto; padding: 0 80px; }
+    .container-fluid { width: 100%; margin: 0 auto; padding: 0 30px; height: 100%; }
+
+    /* Header */
+    .header {
+      padding: 10px 0;
+      background: var(--text-dark);
+      box-shadow: 0px 10px 14px 0px rgba(0, 0, 0, 0.21);
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      z-index: 50;
+    }
+    .flex_row { display: flex; align-items: center; justify-content: space-between; }
+    .logo { height: 55px; width: auto; }
+    
+    .menu { display: flex; align-items: center; margin-right: auto; justify-content: flex-end; flex-grow: 1; }
+    .menu__list { padding-left: 30px; }
+    .menu__list a {
+      font-size: 17px; font-weight: 600; color: var(--text-light); position: relative;
+    }
+    .menu__list a::after, .menu_link_underline::after {
+      content: ''; position: absolute; bottom: -8px; left: 50%; height: 1px; width: 0; background-color: var(--text-light); transition: var(--transition);
+    }
+    .menu__list a:hover::after, .menu_link_underline:hover::after { width: 100%; left: 0; }
+
+    .btn-request {
+      margin-left: 30px;
+      font-size: 17px; font-weight: 600; text-align: center; color: var(--text-light);
+      padding: 12px 20px; background-color: var(--primary-color); border-radius: 12px; transition: var(--transition); border: none; cursor: pointer;
+    }
+    .btn-request:hover {
+      color: var(--primary-color); background-color: var(--text-light); box-shadow: 0px 0px 20px 5px rgba(255, 255, 255, 0.5);
+    }
+
+    /* Hero Section */
+    .block__1 { position: relative; height: 100dvh; overflow: hidden; }
+    .page__bg {
+      position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1;
+      transform: scale(1.8); animation: scaleImage 3s ease-out forwards; top: 0; left: 0;
+    }
+    .block__1_page { height: 100%; position: relative;}
+    .page__title {
+      display: flex; justify-content: center; align-items: center; flex-direction: column;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      color: var(--text-light); text-shadow: 0px 4px 20px rgba(0,0,0,0.8);
+      opacity: 0; animation: fadeInText 2s 1s ease-out forwards;
+    }
+    
+    @keyframes scaleImage { 100% { transform: scale(1); } }
+    @keyframes fadeInText { 100% { opacity: 1; } }
+
+    h1 { text-transform: uppercase; text-align: center; margin-bottom: 20px; font-size: clamp(28px, 5vw, 60px); font-weight: 700; letter-spacing: 0.05em; }
+    .page__description { font-size: clamp(18px, 2.5vw, 24px); text-align: center; }
+
+    .arrow {
+      position: absolute; bottom: 40px; left: calc(50% - 16px); width: 30px; height: 30px;
+      border: 2px solid var(--text-light); border-left: 0; border-top: 0; transform: rotate(45deg); cursor: pointer; z-index: 10;
+    }
+
+    /* About Section */
+    .block__2 { background-color: var(--bg-gray); padding: 50px 0; }
+    .about { font-size: 18px; line-height: 1.5; }
+    .about__cards {
+      display: flex; align-items: center; justify-content: space-between; gap: 40px; background-color: var(--text-light);
+      box-shadow: 0px 5px 20px 5px rgba(0, 0, 0, 0.1); border-radius: 15px; padding: 40px; margin-top: 30px;
+    }
+    .about__cards-left { max-width: 55%; flex: 1; margin-right: auto; }
+    .about__cards-left p { text-indent: 25px; margin-bottom: 15px; max-width: 650px; line-height: 1.6;}
+    .about__cards-right { max-width: 35%; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    
+    .about__cards-right img { width: 100%; max-width: 260px; height: auto; display: block; margin: 0 auto; }
+    .about__cards-right a {
+      position: relative; margin-top: 20px; font-size: 20px; font-style: italic; font-weight: 700; transition: var(--transition); text-align: center; display: inline-block;
+    }
+    .about__cards-right a::after { background-color: var(--primary-color); }
+    .about__cards-right a:hover { color: var(--primary-color); }
+
+    /* Decor Line */
+    .line { position: relative; margin: 20px 0; height: 3px; display: flex; justify-content: center;}
+    .line-1, .line-2 { height: 3px; width: 30%; background: var(--primary-color); position: relative; }
+    .line-1:after, .line-2:after {
+      content: ''; position: absolute; width: 12px; height: 12px; background: var(--primary-color); top: 50%; transform: translateY(-50%); border-radius: 50%;
+    }
+    .line-1 { margin-right: 25px;}
+    .line-1:after { right: -12px; }
+    .line-2 { margin-left: 25px;}
+    .line-2:after { left: -12px; }
+
+    /* Services */
+    .services { padding: 50px 0; }
+    .services__slide_description, .services__slide_question { padding-top: 25px; text-align: center; font-size: 18px; }
+    .services__slide_description p span, .services__slide_question span { font-weight: 700; color: var(--text-dark); }
+    .services__slide_question.sail { font-style: italic; font-size: 15px; color: #666;}
+    
+    .services__cards-wrapper { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px;}
+    
+    .services__cards-card {
+      position: relative; overflow: hidden; width: 200px; height: 200px; border-radius: 15px; background-color: var(--bg-gray); transition: var(--transition);
+    }
+    .services__cards-card:hover { z-index: 1; transform: scale(1.15); box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.3); }
+    
+    .cards-face, .cards-out { position: absolute; height: 100%; width: 100%; transition: var(--transition); display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; line-height: 1;}
+    .services__cards-card:hover .cards-face { opacity: 0; }
+    
+    .card__icon { height: 100px; width: 100%; display: flex; justify-content: center; align-items: flex-end; margin-bottom: 10px;}
+    .card__icon img { width: 40%; }
+    .card__info_title { padding: 0 5px; height: 60px; font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center; width: 100%; margin: 0;}
+    
+    .cards-out { background-color: var(--primary-color); color: var(--text-light); opacity: 0; justify-content: space-between; padding: 10px;}
+    .services__cards-card:hover .cards-out { opacity: 1; }
+    
+    .card__info { height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; }
+    .card__info_description { font-size: 13px; margin: 0; line-height: 1.2; }
+    .card__price { font-size: 17px; font-weight: bold; color: var(--success-color); margin: 0; }
+    
+    .card__button { 
+      cursor: pointer; background-color: #fff; color: black; border-radius: 12px; 
+      width: 140px; padding: 8px; transition: var(--transition); font-size: 14px; border: none; font-weight: 600; 
+    }
+    .card__button:hover { background-color: var(--success-color); color: var(--text-light); box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5); }
+
+    /* Advantages */
+    .block4 { background-color: var(--bg-gray); padding: 50px 0; }
+    .block4__advantages-cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px; }
+    .block4__advantages-text {
+      position: relative; width: calc(50% - 20px); background-color: var(--text-light); border-radius: 15px;
+      box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05); transition: var(--transition); padding: 25px; padding-right: 120px; display: flex; align-items: center;
+    }
+    .block4__advantages-text:hover { transform: translateY(-5px); }
+    .block4__advantages-text:hover .block4__advantages-number { color: var(--primary-color); }
+    
+    .block4__advantages-number {
+      position: absolute; right: 20px; top: 0; bottom: 0; display: flex; align-items: center; font-size: 100px; font-weight: 900;
+      color: #eaeaea; transition: var(--transition); line-height: 1; z-index: 0; text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.3);
+    }
+    .block4__advantages-text p { position: relative; z-index: 1; margin: 0; font-size: 15px; text-indent: 15px;}
+    .block4__advantages-text p span { font-weight: 900; font-size: 18px; color: var(--text-dark); display: block; margin-bottom: 5px; text-indent: 0;}
+
+    /* Reviews (Modern Swiper) */
+    .reviews { padding: 50px 0; }
+    .reviews__descr { font-size: 17px; margin: 30px auto; padding: 30px; border-radius: 15px; box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05); }
+    .reviews__descr_block h3 { display: flex; align-items: center; margin-bottom: 25px;}
+    .reviews__descr_block h3 svg { margin-left: 15px; }
+
+    .swiper { padding: 20px 0 50px 0; overflow: hidden; width: 100%;}
+    .swiper-slide { 
+      background: var(--bg-light); border-radius: 15px; padding: 25px; 
+      height: auto; display: flex; flex-direction: column; text-align: left; position: relative;
+    }
+    .reviews__slider_name { font-weight: 700; position: relative; display: flex; align-items: center; margin-bottom: 10px; font-size: 17px; padding-left: 60px;}
+    .reviews__slider_avatar {
+      position: absolute; top: 50%; left: 0; transform: translateY(-50%);
+      width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+      color: white; font-weight: 400; font-size: 24px; background: var(--primary-color);
+    }
+    .reviews__slider_date { font-size: 13px; color: #666; margin-bottom: 10px; }
+    
+    .reviews__slider_rating { display: flex; flex-direction: row; align-items: center; margin-bottom: 15px; gap: 2px;}
+    .slider__star { 
+      display: inline-block; width: 25px; height: 25px; 
+      background-image: url("data:image/svg+xml,%3Csvg width='800px' height='800px' viewBox='0 0 24 24' fill='rgb(252, 151, 0)' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.2691 4.41115C11.5006 3.89177 11.6164 3.63208 11.7776 3.55211C11.9176 3.48263 12.082 3.48263 12.222 3.55211C12.3832 3.63208 12.499 3.89177 12.7305 4.41115L14.5745 8.54808C14.643 8.70162 14.6772 8.77839 14.7302 8.83718C14.777 8.8892 14.8343 8.93081 14.8982 8.95929C14.9705 8.99149 15.0541 9.00031 15.2213 9.01795L19.7256 9.49336C20.2911 9.55304 20.5738 9.58288 20.6997 9.71147C20.809 9.82316 20.8598 9.97956 20.837 10.1342C20.8108 10.3122 20.5996 10.5025 20.1772 10.8832L16.8125 13.9154C16.6877 14.0279 16.6252 14.0842 16.5857 14.1527C16.5507 14.2134 16.5288 14.2807 16.5215 14.3503C16.5132 14.429 16.5306 14.5112 16.5655 14.6757L17.5053 19.1064C17.6233 19.6627 17.6823 19.9408 17.5989 20.1002C17.5264 20.2388 17.3934 20.3354 17.2393 20.3615C17.0619 20.3915 16.8156 20.2495 16.323 19.9654L12.3995 17.7024C12.2539 17.6184 12.1811 17.5765 12.1037 17.56C12.0352 17.5455 11.9644 17.5455 11.8959 17.56C11.8185 17.5765 11.7457 17.6184 11.6001 17.7024L7.67662 19.9654C7.18404 20.2495 6.93775 20.3915 6.76034 20.3615C6.60623 20.3354 6.47319 20.2388 6.40075 20.1002C6.31736 19.9408 6.37635 19.6627 6.49434 19.1064L7.4341 14.6757C7.46898 14.5112 7.48642 14.429 7.47814 14.3503C7.47081 14.2807 7.44894 14.2134 7.41394 14.1527C7.37439 14.0842 7.31195 14.0279 7.18708 13.9154L3.82246 10.8832C3.40005 10.5025 3.18884 10.3122 3.16258 10.1342C3.13978 9.97956 3.19059 9.82316 3.29993 9.71147C3.42581 9.58288 3.70856 9.55304 4.27406 9.49336L8.77835 9.01795C8.94553 9.00031 9.02911 8.99149 9.10139 8.95929C9.16534 8.93081 9.2226 8.8892 9.26946 8.83718C9.32241 8.77839 9.35663 8.70162 9.42508 8.54808L11.2691 4.41115Z' stroke='%23000000' stroke-width='0' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); 
+      background-repeat: no-repeat; background-position: center; background-size: 100%;
+    }
+    .slider__star.star-none { filter: grayscale(100%) opacity(0.3); }
+    .reviews__slider_service { font-size: 13px; color: #666; margin-left: 10px;}
+    
+    .swiper-slide span { font-weight: bold; display: block; margin-bottom: 5px; font-size: 15px;}
+    .swiper-slide p { font-size: 14px; margin: 0; line-height: 1.4; flex-grow: 1;}
+
+    .swiper-button-next, .swiper-button-prev { color: var(--text-dark); background: rgba(255,255,255,0.8); border-radius: 50%; width: 50px; height: 50px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .swiper-button-next:after, .swiper-button-prev:after { font-size: 24px; }
+    .swiper-button-next:hover, .swiper-button-prev:hover { color: var(--primary-color); transform: scale(1.1); transition: 0.3s;}
+
+    /* Contacts */
+    .contacts { padding: 50px 0; background-color: var(--bg-gray); }
+    .contacts__block {
+      display: flex; flex-wrap: wrap; justify-content: space-between; background-color: var(--text-light);
+      padding: 30px 40px; border-radius: 15px; box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1); margin-top: 30px; align-items: center;
+    }
+    .contacts__block h3 { width: 100%; text-align: center; margin-bottom: 30px; font-weight: normal;}
+    .contacts__block_item { width: 48%; display: flex; flex-direction: column; gap: 30px;}
+    
+    .contacts__item_phone, .contacts__item_mail { display: flex; align-items: center; }
+    .contacts__item_icon { transition: var(--transition); display: block;}
+    .contacts__item_icon:hover { transform: translateY(-3px); }
+    .contacts__item_icon svg path { transition: var(--transition); }
+    .contacts__item_icon:hover svg path { stroke: var(--primary-color); }
+    .contacts__item_icon.icon__phone:hover svg path { stroke: none; fill: var(--primary-color); }
+    .contacts__item_icon circle { stroke: var(--success-color); }
+    .contacts__item_icon:hover circle { stroke: var(--success-color); }
+    
+    .contacts__item_content { margin-left: 20px; flex: 1; min-width: 0; }
+    .contacts__item_link { font-size: 20px; font-weight: bold; transition: var(--transition); word-break: break-word; display: block; }
+    .contacts__item_link:hover { color: var(--primary-color); }
+    .contacts__item_descr { color: #666; font-size: 14px; }
+
+    .contacts__block_time { margin-bottom: 10px;}
+    .time_item_title { font-size: 20px; font-weight: 600; margin-bottom: 5px; }
+    .time_item_descr { font-size: 16px; }
+    .time_item_descr span { color: var(--success-color); font-weight: bold; }
+    
+    .contacts__block_social { display: flex; gap: 20px; align-items: center;}
+    .social__item_link { transition: var(--transition); filter: grayscale(100%); }
+    .social__item_link:hover { filter: grayscale(0%); transform: scale(1.1); }
+
+    /* Footer */
+    .footer { padding: 30px 0; background-color: #d0d1d37a; font-size: 13px; color: #000; text-align: justify; }
+
+    /* Modals (Popups) */
+    .pop_up {
+      position: fixed; inset: 0; z-index: 100; display: flex; justify-content: center; align-items: center;
+      opacity: 0; visibility: hidden; transition: var(--transition);
+    }
+    .pop_up.active { opacity: 1; visibility: visible; }
+    .pop_up_bg { position: absolute; inset: 0; background: rgba(0,0,0,0.8); cursor: pointer;}
+    .pop_up_body { position: relative; z-index: 101; background: var(--text-dark); padding: 40px; border-radius: 15px; text-align: center; width: 90%; max-width: 450px;}
+    .pop_up_body p { color: var(--text-light); font-size: 28px; font-weight: bold; margin-top: 0; margin-bottom: 20px;}
+    
+    .pop_up_body input, .pop_up_body textarea {
+      width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #fff; font-size: 16px; font-weight: 500; font-family: var(--font-main);
+    }
+    .pop_up_body textarea { height: 140px; resize: none; }
+    .pop_up_body input:focus, .pop_up_body textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0px 5px 20px 5px rgba(0, 0, 0, 0.1); }
+    
+    .pop_up_body button {
+      width: 100%; padding: 15px; background: rgba(22, 44, 189, 0.63); color: white; font-size: 18px; font-weight: 600;
+      border: none; border-radius: 12px; cursor: pointer; transition: var(--transition); margin-top: 10px;
+    }
+    .pop_up_body button:hover:not(:disabled) { background: var(--primary-color); box-shadow: 0px 10px 14px rgba(0, 0, 0, 0.21);}
+    .pop_up_body button:disabled { opacity: 0.7; cursor: not-allowed; }
+    .answer { margin-bottom: 15px; font-weight: bold; color: white;}
+
+    .pop_up_close {
+      position: absolute; top: -45px; right: -35px; color: white; font-size: 38px; cursor: pointer; transition: var(--transition);
+    }
+    .pop_up_close:hover { color: var(--primary-color); }
+
+    /* Floating Action Button (Мессенджеры) */
+    .messenger-widget {
+      position: fixed;
+      bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+      left: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      gap: 15px;
+    }
+    .messenger-fab {
+      width: 60px; height: 60px;
+      background-color: var(--primary-color);
+      border-radius: 50%;
+      display: flex; justify-content: center; align-items: center;
+      cursor: pointer; border: none; outline: none;
+      box-shadow: 0 4px 15px rgba(22, 44, 189, 0.4);
+      animation: pulse-blue 2s infinite;
+      transition: var(--transition);
+      position: relative;
+    }
+    .messenger-fab .icon-chat { opacity: 1; position: absolute; transition: 0.3s ease; width: 30px; height: 30px; fill: #fff; }
+    .messenger-fab .icon-close { opacity: 0; position: absolute; transition: 0.3s ease; transform: rotate(-90deg); width: 30px; height: 30px; color: #fff;}
+    
+    .messenger-widget.open .messenger-fab {
+      animation: none;
+      background-color: #FF4053; 
+      box-shadow: 0 4px 15px rgba(255, 64, 83, 0.4);
+    }
+    .messenger-widget.open .messenger-fab .icon-chat { opacity: 0; transform: rotate(90deg); }
+    .messenger-widget.open .messenger-fab .icon-close { opacity: 1; transform: rotate(0); }
+
+    .messenger-links {
+      display: flex; flex-direction: column; gap: 12px;
+      opacity: 0; visibility: hidden;
+      transform: translateY(20px) scale(0.8);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: bottom center;
+    }
+    .messenger-widget.open .messenger-links {
+      opacity: 1; visibility: visible; transform: translateY(0) scale(1);
+    }
+    .messenger-links .social__item_link {
+      width: 50px; height: 50px;
+      background: #fff; border-radius: 50%;
+      display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      filter: none;
+    }
+    .messenger-links .social__item_link svg { width: 35px; height: 35px; }
+    
+    @keyframes pulse-blue {
+      0% { box-shadow: 0 0 0 0 rgba(22, 44, 189, 0.7); }
+      70% { box-shadow: 0 0 0 15px rgba(22, 44, 189, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(22, 44, 189, 0); }
+    }
+
+    /* Mobile Menu */
+    .burger-menu { display: none; }
+    .burger-menu_button {
+      position: fixed; top: 10px; right: 10px; z-index: 60; width: 60px; height: 60px;
+      background: transparent; border: none; cursor: pointer;
+    }
+    .burger-menu_lines, .burger-menu_lines::before, .burger-menu_lines::after {
+      position: absolute; width: 40px; height: 3px; background-color: var(--text-light); transition: 0.4s;
+    }
+    .burger-menu_lines { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    .burger-menu_lines::before { content: ''; top: -10px; left: 0;}
+    .burger-menu_lines::after { content: ''; top: 10px; left: 0;}
+    
+    .burger-menu_active .burger-menu_lines { background-color: transparent; }
+    .burger-menu_active .burger-menu_lines::before { top: 0; transform: rotate(45deg); }
+    .burger-menu_active .burger-menu_lines::after { top: 0; transform: rotate(-45deg); }
+
+    .burger-menu_nav {
+      position: fixed; top: 0; right: -100%; width: 100%; max-width: 350px; height: 100dvh; background: var(--text-dark);
+      z-index: 55; display: flex; flex-direction: column; padding-top: 100px; transition: 0.8s; overflow-y: auto;
+    }
+    .burger-menu_active .burger-menu_nav { right: 0; transition: 0.4s;}
+    .burger-menu_link { color: var(--text-light); padding: 15px 30px; font-size: 18px; font-weight: 600;}
+    .burger-menu_overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 54; display: none; transition: 0.4s;}
+    .burger-menu_active .burger-menu_overlay { display: block;}
+
+    .bg2 { display: none; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .container { padding: 0 20px; }
+      #mainNav, .btn-request { display: none; }
+      .burger-menu { display: block; }
+    }
+
+    @media (max-width: 768px) {
+      .contacts__block { flex-direction: column; }
+      .contacts__block_item { width: 100%; height: auto; }
+      .footer { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+      
+      /* Стрелки снизу для мобилок */
+      .swiper-button-prev, .swiper-button-next { 
+        display: flex; top: auto; bottom: 0px; width: 40px; height: 40px; margin: 0;
+      }
+      .swiper-button-prev { left: calc(50% - 45px); }
+      .swiper-button-next { right: calc(50% - 45px); }
+      .swiper-button-next:after, .swiper-button-prev:after { font-size: 18px; }
+      
+      .about__cards { flex-direction: column; gap: 30px;}
+      .about__cards-left, .about__cards-right { max-width: 100%; }
+      .block4__advantages-text { width: 100%; }
+    }
+
+    @media (max-width: 480px) {
+      .page__bg.bg1 { display: none; }
+      .bg2 { display: block; }
+      h1 { font-size: 25px; }
+      .page__description { font-size: 20px; }
+      .services__cards-card { width: 100%; height: 190px; }
+      .services__cards-card:hover { transform: none; box-shadow: none; }
+      .services__cards-card:hover .cards-face { opacity: 1; }
+      .cards-face { width: 50%; left: 0; }
+      .cards-out { width: 50%; right: 0; opacity: 1; }
+      .line { display: none; }
+      .block4__advantages-text { width: 100%; padding: 15px 115px 15px 15px; }
+      .block4__advantages-number { font-size: 130px; color: var(--primary-color); }
+      .reviews__descr { padding: 20px; }
+      .contacts__item_link { font-size: 16px; }
+      .contacts__item_icon { width: 40px; height: 40px; }
+      .contacts__item_icon svg { width: 100%; height: 100%; }
+      .contacts__item_content { margin-left: 15px; }
+      .pop_up_body { width: 300px; padding: 25px 15px; }
+      .pop_up_close { top: 0px; right: 5px; font-size: 25px; color: #fff;}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="flex_row">
+        <img class="logo" src="img/logo.svg" alt="Логотип ОМЕГА">
+        <nav id="mainNav">
+          <ul class="menu" role='menu'>
+            <li class="menu__list"><a href="#about" class="menu_link_underline">О нас</a></li>
+            <li class="menu__list"><a href="#services" class="menu_link_underline">Услуги</a></li>
+            <li class="menu__list"><a href="#advantages" class="menu_link_underline">Преимущества</a></li>
+            <li class="menu__list"><a href="#reviews" class="menu_link_underline">Отзывы</a></li>
+            <li class="menu__list"><a href="#contacts" class="menu_link_underline">Контакты</a></li>
+          </ul>
+        </nav>
+        <button class="btn-request" id="open_pop_up" aria-label="Связаться с нами">Связаться с нами</button>
+        
+        <!-- Mobile Menu -->
+        <div class="burger-menu">
+          <button class="burger-menu_button" aria-label="Открыть мобильное меню">
+            <span class="burger-menu_lines"></span>
+          </button>
+          <nav class="burger-menu_nav" id="mainNav3">
+            <a href="#about" class="burger-menu_link">О нас</a>
+            <a href="#services" class="burger-menu_link">Услуги</a>
+            <a href="#advantages" class="burger-menu_link">Преимущества</a>
+            <a href="#reviews" class="burger-menu_link">Отзывы</a>
+            <a href="#contacts" class="burger-menu_link">Контакты</a>
+            <a href="tel:+70000000000" class="burger-menu_link" rel="nofollow">+7 (000) 000-00-00</a>
+          </nav>
+          <div class="burger-menu_overlay"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="block__1" id="mainNav2">
+    <!-- Изображения с приоритетом загрузки -->
+    <img src="img/BG.webp" alt="Фон детектив" class="page__bg bg1" fetchpriority="high">
+    <img src="img/BG_mobile.webp" alt="Фон детектив мобильный" class="page__bg bg2" fetchpriority="high">
+    <div class="container-fluid">
+      <div class="block__1_page">
+        <div class="page__title">
+          <h1>Частное детективное<br> агентство «ОМЕГА»</h1>
+          <span class="page__description">Всё обо всех</span>
+        </div>
+        <a href="#about" class="arrow" aria-label="Скролл вниз"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="block__2" id="about">
+    <div class="container">
+      <article class="about">
+        <h2 class="about__title">О нас</h2>
+        <div class="line"><div class="line-1"></div><div class="line-2"></div></div>
+        <div class="about__cards">
+          <div class="about__cards-left">
+            <p>Вас приветствует частное детективное агентство «ОМЕГА», где мы заботимся о вашей конфиденциальности.</p>
+            <p>Наш опыт и профессионализм говорят сами за себя - мы успешно работаем на рынке уже несколько лет и имеем множество положительных отзывов от наших довольных клиентов.</p>
+            <p>Мы предлагаем честную и качественную работу. Независимо от сложности задачи, мы всегда стремимся к достижению наилучших результатов.</p>
+            <p>«ОМЕГА» всегда готовы выслушать ваши проблемы и предложить наилучшее решение.</p>
+          </div>
+          <div class="about__cards-right">
+            <!-- Inline SVG Logo or Image -->
+            <img src="img/icon logo.svg" alt="Иконка Омега" loading="lazy" width="260" height="260">
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services" id="services">
+    <div class="container">
+      <h2 class="services__slide_title">Наши услуги</h2>
+      <div class="line"><div class="line-1"></div><div class="line-2"></div></div>
+      <div class="services__slide_description">
+        <p>По любой из услуг проведём - <span>бесплатную консультацию!</span></p>
+      </div>
+
+      <div class="services__cards-wrapper">
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon1.svg" alt="Стандартный запрос" loading="lazy"></div>
+            <h3 class="card__info_title">Стандартный запрос</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Содержит общую информацию о человеке (номер, адрес, паспорт, ИНН, СНИЛС).</p>
+            <p class="card__price">2 000 &#8381;</p>
+            <button class="card__button" data-service="Стандартный запрос">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon2.svg" alt="Имущество" loading="lazy"></div>
+            <h3 class="card__info_title">Имущество</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Сведения о недвижимости и транспортных средствах физ/юр лица.</p>
+            <p class="card__price">4 200 &#8381;</p>
+            <button class="card__button" data-service="Имущество">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon3.svg" alt="Трудовая" loading="lazy"></div>
+            <h3 class="card__info_title">Трудовая</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Данные об актуальном и предыдущих местах работы, должности.</p>
+            <p class="card__price">4 000 &#8381;</p>
+            <button class="card__button" data-service="Трудовая">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon4.svg" alt="ЗАГС" loading="lazy"></div>
+            <h3 class="card__info_title">ЗАГС</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Сведения о родственниках человека: брак, родители, дети.</p>
+            <p class="card__price">5 000 &#8381;</p>
+            <button class="card__button" data-service="ЗАГС">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon5.svg" alt="Выписка ЕГРН" loading="lazy"></div>
+            <h3 class="card__info_title">Выписка ЕГРН</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Данные собственника объекта недвижимости/предыдущих владельцах объекта.</p>
+            <p class="card__price">3 800 / 5 000 &#8381;</p>
+            <button class="card__button" data-service="Выписка ЕГРН">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon6.svg" alt="Кредитная история" loading="lazy"></div>
+            <h3 class="card__info_title">Кредитная история</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Сведения о кредитах/ипотеке/лизингах - суммы, просрочки и долги.</p>
+            <p class="card__price">от 5 000 &#8381;</p>
+            <button class="card__button" data-service="Кредитная история">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon7.svg" alt="Судимости" loading="lazy"></div>
+            <h3 class="card__info_title">Судимости</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Содержит данные о наличии судимостей физического лица.</p>
+            <p class="card__price">от 6 000 &#8381;</p>
+            <button class="card__button" data-service="Судимости">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon8.svg" alt="2 НДФЛ" loading="lazy"></div>
+            <h3 class="card__info_title">2 НДФЛ</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Показывает доходы физ.лица за выбранный трудовой год.</p>
+            <p class="card__price">от 4 500 &#8381;</p>
+            <button class="card__button" data-service="2 НДФЛ">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon9.svg" alt="Список счетов" loading="lazy"></div>
+            <h3 class="card__info_title">Список счетов</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Список банковских счетов физ/юр лиц.</p>
+            <p class="card__price">от 5 000 &#8381;</p>
+            <button class="card__button" data-service="Список счетов">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon10.svg" alt="Карточка учёта ТС" loading="lazy"></div>
+            <h3 class="card__info_title">Карточка учёта ТС</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Позволяет узнать от гос.номера автомобиля данные физ/юр лиц.</p>
+            <p class="card__price">от 4 000 &#8381;</p>
+            <button class="card__button" data-service="Карточка учёта ТС">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon11.svg" alt="Карточка ВУ" loading="lazy"></div>
+            <h3 class="card__info_title">Карточка ВУ</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Данные о водительском удостоверении физического лица.</p>
+            <p class="card__price">от 4 500 &#8381;</p>
+            <button class="card__button" data-service="Карточка ВУ">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon12.svg" alt="Список сотрудников юр. лица" loading="lazy"></div>
+            <h3 class="card__info_title">Список сотрудников юр. лица</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Позволяет узнать о трудоустроенных сотрудниках компании.</p>
+            <p class="card__price">от 6 000 &#8381;</p>
+            <button class="card__button" data-service="Список сотрудников юр. лица">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon13.svg" alt="ГИСМА" loading="lazy"></div>
+            <h3 class="card__info_title">ГИСМА</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Данные о всех паспортах и загранпаспортах человека, а так же обо всех прописках.</p>
+            <p class="card__price">от 6 000 &#8381;</p>
+            <button class="card__button" data-service="ГИСМА">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon14.svg" alt="Магистраль" loading="lazy"></div>
+            <h3 class="card__info_title">Магистраль</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">История авиа, жд и автобусных передвижений человека по стране.</p>
+            <p class="card__price">от 9 500 &#8381;</p>
+            <button class="card__button" data-service="Магистраль">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon15.svg" alt="Список пассажиров" loading="lazy"></div>
+            <h3 class="card__info_title">Список пассажиров</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Содержит: ФИО, дату рождения, паспортные, направление, дату.</p>
+            <p class="card__price">от 15 000 &#8381;</p>
+            <button class="card__button" data-service="Список пассажиров">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon16.svg" alt="Книга покупок/Книга продаж юр. лица" loading="lazy"></div>
+            <h3 class="card__info_title">Книга покупок/Книга продаж</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Предоставляет данные о реализации и приобретении товаров и услуг юр. лиц.</p>
+            <p class="card__price">от 4 000 &#8381;</p>
+            <button class="card__button" data-service="Книга покупок/Книга продаж юр. лица">Заказать</button>
+          </div>
+        </article>
+        <article class="services__cards-card">
+          <div class="cards-face">
+            <div class="card__icon"><img src="img/icons/icon17.svg" alt="Граница" loading="lazy"></div>
+            <h3 class="card__info_title">Граница</h3>
+          </div>
+          <div class="cards-out">
+            <p class="card__info_description">Содержит данные о пересечении границы РФ, в каком направление туда и обратно.</p>
+            <p class="card__price">от 9 000 &#8381;</p>
+            <button class="card__button" data-service="Граница">Заказать</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="services__slide_question">
+        <p><span>Не нашли нужную услугу?</span> Не отчаивайтесь! Свяжитесь с нами в чате (телеграмм, вотсап) или заполните форму обратной связи. Наши специалисты сделают все возможное, чтобы найти для вас идеальное решение.</p>
+        <p class="services__slide_question sail">Цены могут отличаться от указанных на сайте, уточняйте их актуальность</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Advantages -->
+  <section class="block4" id="advantages">
+    <div class="container">
+      <h2 class="block4__advantages-headline">Наши преимущества</h2>
+      <div class="line"><div class="line-1"></div><div class="line-2"></div></div>
+      <div class="block4__advantages-cards">
+        <article class="block4__advantages-text">
+          <p><span>Профессионализм и опыт</span> наши специалисты обладают высокой квалификацией и широким опытом работы.</p>
+          <div class="block4__advantages-number" aria-hidden="true">1</div>
+        </article>
+        <article class="block4__advantages-text">
+          <p><span>Индивидуальный подход</span> мы понимаем, что каждая ситуация уникальна, и готовы предложить персонализированные решения для каждого клиента.</p>
+          <div class="block4__advantages-number" aria-hidden="true">2</div>
+        </article>
+        <article class="block4__advantages-text">
+          <p><span>Адекватные цены</span> мы предлагаем разумные и конкурентоспособные цены, стремясь сделать наши услуги доступными для вас (от 1500 р.).</p>
+          <div class="block4__advantages-number" aria-hidden="true">3</div>
+        </article>
+        <article class="block4__advantages-text">
+          <p><span>Сроки выполнения</span> мы понимаем, что время играет важную роль, поэтому гарантируем эффективное и оперативное выполнение (от 1 часа).</p>
+          <div class="block4__advantages-number" aria-hidden="true">4</div>
+        </article>
+        <article class="block4__advantages-text">
+          <p><span>Конфиденциальность и этика</span> мы ценим доверие наших клиентов и гарантируем полную конфиденциальность при выполнении всех задач.</p>
+          <div class="block4__advantages-number" aria-hidden="true">5</div>
+        </article>
+        <article class="block4__advantages-text">
+          <p><span>Без пустых обещаний</span> все наши услуги основаны на реальной, проверенной практике и могут быть адаптированы под ваши потребности.</p>
+          <div class="block4__advantages-number" aria-hidden="true">6</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews (Modern Swiper) -->
+  <section class="reviews" id="reviews">
+    <div class="container">
+      <h2 class="reviews__title">Отзывы</h2>
+      <div class="line"><div class="line-1"></div><div class="line-2"></div></div>
+      <div class="reviews__descr">
+        <p>Детективное агентство Omega предлагает высокий уровень профессионализма и конфиденциальности в сфере сбора информации. Мы поддерживаем свою репутацию, заботясь как о наших собственных достижениях, так и о благополучии наших клиентов. Ознакомьтесь с многочисленными отзывами, подтверждающими превосходное качество наших услуг, и сделайте свой собственный вывод о нашей выдающейся работе.</p>
+        <hr>
+        <div class="reviews__descr_block">
+          <h3>Отзывы клиентов</h3>
+          
+          <!-- Swiper Container -->
+          <div class="swiper reviews__slider">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar">А</div>Анна</div>
+                <div class="reviews__slider_date">26 июля</div>
+                <div class="reviews__slider_rating">
+                  <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>оооочень оперативно, чётко, всё по делу, даже подумать не могла, что так быстро получу ответ. Задан вопрос, даны не все данные, но специалист молниеносно предоставил именно те данные, которые меня интересовали. Приятно иметь дело с серьезным человеком.</p>
+              </div>
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar" style="background: #04E061">Д</div>Дарья</div>
+                <div class="reviews__slider_date">10 апреля</div>
+                <div class="reviews__slider_rating">
+                   <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>Я ищу своих биологических родителей, мне потребовалась информация о некоторых людях. Обратилась в агентство. Информацию получила в полном обьёме в течении нескольких часов. Особенно хочу отметить качество оказанной услуги. Очень хорошее, доброе отношение.</p>
+              </div>
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar" style="background: #FF4053">М</div>Мария</div>
+                <div class="reviews__slider_date">23 ноября</div>
+                <div class="reviews__slider_rating">
+                   <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>ПОИСК ЧЕЛОВЕКА. Огромное спасибо команде за проделанную работу. Сразу же приступил к работе и зная только фамилию и имя, смог установить все данные человека по его родственникам и найти человека. По времени это заняло меньше часа.</p>
+              </div>
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar" style="background-color: #965EEB">С</div>Сергей</div>
+                <div class="reviews__slider_date">29 марта</div>
+                <div class="reviews__slider_rating">
+                  <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>Потерял контакт с сыном . Обращался в детективные агентства, за поиск запрашивали от 25 тр. и без гарантии. Обратился сюда и специалист собрал всю нужную мне информацию за 4-5 часов без предоплаты. Рекомендую.</p>
+              </div>
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar" style="background-color: #0AF">М</div>Михаил</div>
+                <div class="reviews__slider_date">27 мая</div>
+                <div class="reviews__slider_rating">
+                  <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>Специалист помог найти дальнего, давно потерянного родственника, очень быстро, не ожидал !! Какое счастье, когда слышишь удивленный, счастливый голос родного человека, благодарю Bac!</p>
+              </div>
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar" style="background-color: rgb(189, 186, 0)">А</div>АЛЕКСЕЙ</div>
+                <div class="reviews__slider_date">4 ноября</div>
+                <div class="reviews__slider_rating">
+                  <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>ребята всем рекомендую человек нереально крут за 10 менут нашел всю информацию я вшоке и ценовая категория адекватна супер мега специалист и оплату взял только после работы которую проделал</p>
+              </div>
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar" style="background-color: rgb(233, 140, 18)">П</div>Павел</div>
+                <div class="reviews__slider_date">12 апреля</div>
+                <div class="reviews__slider_rating">
+                  <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>Благодарю команду за отзывчивость и за скорость. Выполняли услугу по поиску близких с возможным возвратом средств. Все договоренности были соблюдены, можно доверять! Рекомендую!</p>
+              </div>
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar" style="background-color: rgb(235, 70, 29)">Т</div>Татьяна</div>
+                <div class="reviews__slider_date">4 декабря</div>
+                <div class="reviews__slider_rating">
+                  <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star star-none"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>Профессионально и быстро решил поставленные задачи. Помог как специалист, но больше впечатлил, как человек. Я бы рекомендовала его всем, кто нуждается в информационной помощи.</p>
+              </div>
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar" style="background-color: rgb(233, 18, 215)">Ю</div>Юлия</div>
+                <div class="reviews__slider_date">25 апреля</div>
+                <div class="reviews__slider_rating">
+                  <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>Супеееер клевый, подсказал - нашел, думал со мной вместе, я довольна что нашла того детектива😍</p>
+              </div>
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar" style="background-color: rgb(118, 18, 233)">А</div>Артём</div>
+                <div class="reviews__slider_date">30 октября</div>
+                <div class="reviews__slider_rating">
+                  <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>Работа была сделана на 5++, специалист очень доброжелателень и отзывчивый, сделал быстро и грамотно, прислушиваться к просьбам, советую очень, буду обращаться всегда!</p>
+              </div>
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar" style="background-color: rgb(18, 233, 197)">А</div>Алёна</div>
+                <div class="reviews__slider_date">7 июля</div>
+                <div class="reviews__slider_rating">
+                  <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>Благодарю за помощь! Приятный и понимающий человек, который горит своим делом и старается выложиться не просто на 100, а на все 250%</p>
+              </div>
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar" style="background-color: rgb(10, 99, 29)">К</div>Кристина И.</div>
+                <div class="reviews__slider_date">9 августа</div>
+                <div class="reviews__slider_rating">
+                  <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>всё супер! 1) отвечает в чате быстро 2) за запрошенную информацию берет строго оговоренную сумму, без обманов 3) информацию предоставляет правдивую и супер быстро</p>
+              </div>
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar" style="background-color: rgb(99, 53, 10)">А</div>Андрей</div>
+                <div class="reviews__slider_date">7 сентября</div>
+                <div class="reviews__slider_rating">
+                  <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>Специалист оперативно помог собрать нужную информацию, которая много чего прояснила в моём случае. Доверять людям конечно нужно, но проверять нужно обязательно. Спасибо за помощь.</p>
+              </div>
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar" style="background-color: rgb(10, 19, 99)">M</div>Money Money</div>
+                <div class="reviews__slider_date">18 сентября</div>
+                <div class="reviews__slider_rating">
+                  <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>Честно говоря не ожидала, что человек так быстро найдет информацию, при чем проникся душой к моей проблеме... Действительно многое может, очень профессиональный подход.</p>
+              </div>
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar" style="background-color: rgb(21, 219, 21)">П</div>Полина</div>
+                <div class="reviews__slider_date">1 июля</div>
+                <div class="reviews__slider_rating">
+                  <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>Спасибо большое) Нашел отца мужа, который ушел с семье когда ему ещё только 8 месяцев было и прошло уже 37 лет, они ни разу не виделись за все это время</p>
+              </div>
+              <div class="swiper-slide">
+                <div class="reviews__slider_name"><div class="reviews__slider_avatar" style="background-color: rgb(194, 134, 230)">А</div>Алина</div>
+                <div class="reviews__slider_date">23 сентября</div>
+                <div class="reviews__slider_rating">
+                  <span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><span class="slider__star"></span><div class="reviews__slider_service">Услуга: «Поиск информации»</div>
+                </div>
+                <span>Комментарий</span>
+                <p>Очень понравилось работать со специалистом, он явно заинтересован, в том, чтобы помочь, а не просто получить деньги! Очень быстро нашел нужную информацию, и даже больше...</p>
+              </div>
+            </div>
+            <!-- Swiper Controls -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacts -->
+  <section class="contacts" id="contacts">
+    <div class="container">
+      <h2 class="contacts__title">Контакты</h2>
+      <div class="line"><div class="line-1"></div><div class="line-2"></div></div>
+      <div class="contacts__block">
+        <h3>Работаем по всей территории РФ</h3>
+        <div class="contacts__block_item">
+          <div class="contacts__item_phone">
+            <a href="tel:+70000000000" class="contacts__item_icon icon__phone" aria-label="Позвонить">
+              <svg width="50px" height="50px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16.1007 13.359L15.5719 12.8272H15.5719L16.1007 13.359ZM16.5562 12.9062L17.085 13.438H17.085L16.5562 12.9062ZM18.9728 12.5894L18.6146 13.2483L18.9728 12.5894ZM20.8833 13.628L20.5251 14.2869L20.8833 13.628ZM21.4217 16.883L21.9505 17.4148L21.4217 16.883ZM20.0011 18.2954L19.4723 17.7636L20.0011 18.2954ZM18.6763 18.9651L18.7459 19.7119H18.7459L18.6763 18.9651ZM8.81536 14.7266L9.34418 14.1947L8.81536 14.7266ZM4.00289 5.74561L3.2541 5.78816L3.2541 5.78816L4.00289 5.74561ZM10.4775 7.19738L11.0063 7.72922H11.0063L10.4775 7.19738ZM10.6342 4.54348L11.2346 4.09401L10.6342 4.54348ZM9.37326 2.85908L8.77286 3.30855V3.30855L9.37326 2.85908ZM6.26145 2.57483L6.79027 3.10667H6.79027L6.26145 2.57483ZM4.69185 4.13552L4.16303 3.60368H4.16303L4.69185 4.13552ZM12.0631 11.4972L12.5919 10.9654L12.0631 11.4972ZM16.6295 13.8909L17.085 13.438L16.0273 12.3743L15.5719 12.8272L16.6295 13.8909ZM18.6146 13.2483L20.5251 14.2869L21.2415 12.9691L19.331 11.9305L18.6146 13.2483ZM20.8929 16.3511L19.4723 17.7636L20.5299 18.8273L21.9505 17.4148L20.8929 16.3511ZM18.6067 18.2184C17.1568 18.3535 13.4056 18.2331 9.34418 14.1947L8.28654 15.2584C12.7186 19.6653 16.9369 19.8805 18.7459 19.7119L18.6067 18.2184ZM9.34418 14.1947C5.4728 10.3453 4.83151 7.10765 4.75168 5.70305L3.2541 5.78816C3.35456 7.55599 4.14863 11.144 8.28654 15.2584L9.34418 14.1947ZM10.7195 8.01441L11.0063 7.72922L9.9487 6.66555L9.66189 6.95073L10.7195 8.01441ZM11.2346 4.09401L9.97365 2.40961L8.77286 3.30855L10.0338 4.99296L11.2346 4.09401ZM5.73263 2.04299L4.16303 3.60368L5.22067 4.66736L6.79027 3.10667L5.73263 2.04299ZM10.1907 7.48257C9.66189 6.95073 9.66117 6.95144 9.66045 6.95216C9.66021 6.9524 9.65949 6.95313 9.659 6.95362C9.65802 6.95461 9.65702 6.95561 9.65601 6.95664C9.65398 6.95871 9.65188 6.96086 9.64972 6.9631C9.64539 6.96759 9.64081 6.97245 9.63599 6.97769C9.62634 6.98816 9.61575 7.00014 9.60441 7.01367C9.58174 7.04072 9.55605 7.07403 9.52905 7.11388C9.47492 7.19377 9.41594 7.2994 9.36589 7.43224C9.26376 7.70329 9.20901 8.0606 9.27765 8.50305C9.41189 9.36833 10.0078 10.5113 11.5343 12.0291L12.5919 10.9654C11.1634 9.54499 10.8231 8.68059 10.7599 8.27309C10.7298 8.07916 10.761 7.98371 10.7696 7.96111C10.7748 7.94713 10.7773 7.9457 10.7709 7.95525C10.7677 7.95992 10.7624 7.96723 10.7541 7.97708C10.75 7.98201 10.7451 7.98759 10.7394 7.99381C10.7365 7.99692 10.7335 8.00019 10.7301 8.00362C10.7285 8.00534 10.7268 8.00709 10.725 8.00889C10.7241 8.00979 10.7232 8.0107 10.7223 8.01162C10.7219 8.01208 10.7212 8.01278 10.7209 8.01301C10.7202 8.01371 10.7195 8.01441 10.1907 7.48257ZM11.5343 12.0291C13.0613 13.5474 14.2096 14.1383 15.0763 14.2713C15.5192 14.3392 15.8763 14.285 16.1472 14.1841C16.28 14.1346 16.3858 14.0763 16.4658 14.0227C16.5058 13.9959 16.5392 13.9704 16.5663 13.9479C16.5799 13.9367 16.5919 13.9262 16.6024 13.9166C16.6077 13.9118 16.6126 13.9073 16.6171 13.903C16.6194 13.9008 16.6215 13.8987 16.6236 13.8967C16.6246 13.8957 16.6256 13.8947 16.6266 13.8937C16.6271 13.8932 16.6279 13.8925 16.6281 13.8923C16.6288 13.8916 16.6295 13.8909 16.1007 13.359C15.5719 12.8272 15.5726 12.8265 15.5733 12.8258C15.5735 12.8256 15.5742 12.8249 15.5747 12.8244C15.5756 12.8235 15.5765 12.8226 15.5774 12.8217C15.5793 12.82 15.581 12.8183 15.5827 12.8166C15.5862 12.8133 15.5895 12.8103 15.5926 12.8074C15.5988 12.8018 15.6044 12.7969 15.6094 12.7929C15.6192 12.7847 15.6265 12.7795 15.631 12.7764C15.6403 12.7702 15.6384 12.773 15.6236 12.7785C15.5991 12.7876 15.501 12.8189 15.3038 12.7886C14.8905 12.7253 14.02 12.3853 12.5919 10.9654L11.5343 12.0291ZM9.97365 2.40961C8.95434 1.04802 6.94996 0.83257 5.73263 2.04299L6.79027 3.10667C7.32195 2.578 8.26623 2.63181 8.77286 3.30855L9.97365 2.40961ZM4.75168 5.70305C4.73201 5.35694 4.89075 4.9954 5.22067 4.66736L4.16303 3.60368C3.62571 4.13795 3.20329 4.89425 3.2541 5.78816L4.75168 5.70305ZM19.4723 17.7636C19.1975 18.0369 18.9029 18.1908 18.6067 18.2184L18.7459 19.7119C19.4805 19.6434 20.0824 19.2723 20.5299 18.8273L19.4723 17.7636ZM11.0063 7.72922C11.9908 6.7503 12.064 5.2019 11.2346 4.09401L10.0338 4.99295C10.4373 5.53193 10.3773 6.23938 9.9487 6.66555L11.0063 7.72922ZM20.5251 14.2869C21.3429 14.7315 21.4703 15.7769 20.8929 16.3511L21.9505 17.4148C23.2908 16.0821 22.8775 13.8584 21.2415 12.9691L20.5251 14.2869ZM17.085 13.438C17.469 13.0562 18.0871 12.9616 18.6146 13.2483L19.331 11.9305C18.2474 11.3414 16.9026 11.5041 16.0273 12.3743L17.085 13.438Z" fill="#1C274C" />
+              </svg>
+            </a>
+            <div class="contacts__item_content">
+              <a href="tel:+70000000000" class="contacts__item_link">+7 (000) 000-00-00</a>
+              <div class="contacts__item_descr">Для связи через мессенджеры</div>
+            </div>
+          </div>
+          <div class="contacts__item_mail">
+            <a href="mailto:demo@example.com" target="_blank" class="contacts__item_icon" aria-label="Написать письмо">
+              <svg width="50px" height="50px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 10C22.0185 10.7271 22 11.0542 22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H13" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round" />
+                <path d="M6 8L8.1589 9.79908C9.99553 11.3296 10.9139 12.0949 12 12.0949C13.0861 12.0949 14.0045 11.3296 15.8411 9.79908" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round" />
+                <circle cx="19" cy="5" r="3" stroke="#1C274C" stroke-width="1.5" />
+              </svg>
+            </a>
+            <div class="contacts__item_content">
+              <a href="mailto:demo@example.com" class="contacts__item_link">demo@example.com</a>
+              <div class="contacts__item_descr">Рабочая почта</div>
+            </div>
+          </div>
+        </div>
+        <div class="contacts__block_item">
+          <div class="contacts__block_time">
+            <div class="time_item_title">Пн - Вс с 08:30 до 23:30</div>
+            <div class="time_item_descr">Заявки через сайт принимаются <span>круглосуточно</span></div>
+          </div>
+          <div class="contacts__block_social">
+            <a href="https://t.me/example" target="_blank" class="social__item_link" aria-label="Telegram">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="50" height="50"><rect width="512" height="512" rx="15%" fill="#37aee2"/><path fill="#c8daea" d="M199 404c-11 0-10-4-13-14l-32-105 245-144"/><path fill="#a9c9dd" d="M199 404c7 0 11-4 16-8l45-43-56-34"/><path fill="#f6fbfe" d="M204 319l135 99c14 9 26 4 30-14l55-258c5-22-9-32-24-25L79 245c-21 8-21 21-4 26l83 26 190-121c9-5 17-3 11 4"/></svg>
+            </a>
+            <a href="https://wa.me/70000000000" target="_blank" class="social__item_link" aria-label="WhatsApp">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="50" height="50"><rect width="512" height="512" rx="15%" fill="#25d366"/><path fill="#25d366" stroke="#ffffff" stroke-width="26" d="M123 393l14-65a138 138 0 1150 47z"/><path fill="#ffffff" d="M308 273c-3-2-6-3-9 1l-12 16c-3 2-5 3-9 1-15-8-36-17-54-47-1-4 1-6 3-8l9-14c2-2 1-4 0-6l-12-29c-3-8-6-7-9-7h-8c-2 0-6 1-10 5-22 22-13 53 3 73 3 4 23 40 66 59 32 14 39 12 48 10 11-1 22-10 27-19 1-3 6-16 2-18"/></svg>
+            </a>
+            <!-- Иконка Gmail добавлена в нижний блок -->
+            <a href="mailto:demo@example.com" target="_blank" class="social__item_link" aria-label="Gmail">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-label="Gmail" role="img" height="50px" width="50px" viewBox="0 0 32 32">
+                <path d="M16.58,19.1068l-12.69-8.0757A3,3,0,0,1,7.1109,5.97l9.31,5.9243L24.78,6.0428A3,3,0,0,1,28.22,10.9579Z" fill="#ea4435" />
+                <path d="M25.5,5.5h4a0,0,0,0,1,0,0v18a3,3,0,0,1-3,3h0a3,3,0,0,1-3-3V7.5a2,2,0,0,1,2-2Z" fill="#00ac47" transform="translate(53.0001 32.0007) rotate(180)" />
+                <path d="M29.4562,8.0656c-.0088-.06-.0081-.1213-.0206-.1812-.0192-.0918-.0549-.1766-.0823-.2652a2.9312,2.9312,0,0,0-.0958-.2993c-.02-.0475-.0508-.0892-.0735-.1354A2.9838,2.9838,0,0,0,28.9686,6.8c-.04-.0581-.09-.1076-.1342-.1626a3.0282,3.0282,0,0,0-.2455-.2849c-.0665-.0647-.1423-.1188-.2146-.1771a3.02,3.02,0,0,0-.24-.1857c-.0793-.0518-.1661-.0917-.25-.1359-.0884-.0461-.175-.0963-.267-.1331-.0889-.0358-.1837-.0586-.2766-.0859s-.1853-.06-.2807-.0777a3.0543,3.0543,0,0,0-.357-.036c-.0759-.0053-.1511-.0186-.2273-.018a2.9778,2.9778,0,0,0-.4219.0425c-.0563.0084-.113.0077-.1689.0193a33.211,33.211,0,0,0-.5645.178c-.0515.022-.0966.0547-.1465.0795A2.901,2.901,0,0,0,23.5,8.5v5.762l4.72-3.3043a2.8878,2.8878,0,0,0,1.2359-2.8923Z" fill="#ffba00" />
+                <path d="M5.5,5.5h0a3,3,0,0,1,3,3v18a0,0,0,0,1,0,0h-4a2,2,0,0,1-2-2V8.5a3,3,0,0,1,3-3Z" fill="#4285f4" />
+                <path d="M2.5439,8.0656c.0088-.06.0081-.1213.0206-.1812.0192-.0918.0549-.1766.0823-.2652A2.9312,2.9312,0,0,1,2.7426,7.32c.02-.0475.0508-.0892.0736-.1354A2.9719,2.9719,0,0,1,3.0316,6.8c.04-.0581.09-.1076.1342-.1626a3.0272,3.0272,0,0,1,.2454-.2849c.0665-.0647.1423-.1188.2147-.1771a3.0005,3.0005,0,0,1,.24-.1857c.0793-.0518.1661-.0917.25-.1359A2.9747,2.9747,0,0,1,4.3829,5.72c.089-.0358.1838-.0586.2766-.0859s.1853-.06.2807-.0777a3.0565,3.0565,0,0,1,.357-.036c.076-.0053.1511-.0186.2273-.018a2.9763,2.9763,0,0,1,.4219.0425c.0563.0084.113.0077.169.0193a2.9056,2.9056,0,0,1,.286.0888,2.9157,2.9157,0,0,1,.2785.0892c.0514.022.0965.0547.1465.0795a2.9745,2.9745,0,0,1,.3742.21A2.9943,2.9943,0,0,1,8.5,8.5v5.762L3.78,10.9579A2.8891,2.8891,0,0,1,2.5439,8.0656Z" fill="#c52528" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <article class="footer__policy">
+        © 2024 Демо-макет «ОМЕГА». Сайт является портфолио-демонстрацией веб-разработки и не представляет интересы реальной организации. Контактные данные, отзывы и услуги — вымышленные. Информация на сайте носит исключительно ознакомительный характер и не является публичной офертой. Текст оформлен с отсылкой к стилистике частных детективных агентств в рамках действующего законодательства РФ (ФЗ № 2487-I «О частной детективной и охранной деятельности», ФЗ «О персональных данных», ФЗ «Об оперативно-розыскной деятельности»).
+      </article>
+    </div>
+  </footer>
+
+  <!-- Popup Form -->
+  <div class="pop_up" id="pop_up" role="dialog" aria-modal="true">
+    <div class="pop_up_bg" id="pop_up_bg" aria-label="Закрыть модальное окно"></div>
+    <div class="pop_up_body">
+      <div class="pop_up_close" id="pop_up_close" aria-label="Закрыть" tabindex="0">&#10006;</div>
+      <p>Оставить заявку</p>
+      <form action="#" method="post" id="mailForm">
+        <div class="answer" aria-live="polite"></div>
+        <input type="text" name="honeypot" style="display:none;" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="text" placeholder="Имя" name="name" id="name" maxlength="30" required aria-label="Ваше имя">
+        <input type="tel" placeholder="Телефон" name="tel" id="tel" maxlength="30" required aria-label="Ваш телефон">
+        <input type="email" placeholder="Email" name="email" id="email" maxlength="50" required aria-label="Ваш Email">
+        <input type="text" placeholder="Услуга" name="service" id="service" class="service" maxlength="50" readonly aria-label="Выбранная услуга">
+        <textarea name="message" id="message" placeholder="Опишите вашу ситуацию" maxlength="500" aria-label="Сообщение"></textarea>
+        <button type="submit" id="sendMail">Отправить заявку</button>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Floating Messenger FAB -->
+  <div class="messenger-widget" id="messengerWidget">
+    <div class="messenger-links">
+      <a href="https://t.me/example" target="_blank" class="social__item_link" aria-label="Telegram">
+        <svg viewBox="0 0 512 512"><rect width="512" height="512" rx="15%" fill="#37aee2"/><path fill="#c8daea" d="M199 404c-11 0-10-4-13-14l-32-105 245-144"/><path fill="#a9c9dd" d="M199 404c7 0 11-4 16-8l45-43-56-34"/><path fill="#f6fbfe" d="M204 319l135 99c14 9 26 4 30-14l55-258c5-22-9-32-24-25L79 245c-21 8-21 21-4 26l83 26 190-121c9-5 17-3 11 4"/></svg>
+      </a>
+      <a href="https://wa.me/70000000000" target="_blank" class="social__item_link" aria-label="WhatsApp">
+        <svg viewBox="0 0 512 512"><rect width="512" height="512" rx="15%" fill="#25d366"/><path fill="#25d366" stroke="#ffffff" stroke-width="26" d="M123 393l14-65a138 138 0 1150 47z"/><path fill="#ffffff" d="M308 273c-3-2-6-3-9 1l-12 16c-3 2-5 3-9 1-15-8-36-17-54-47-1-4 1-6 3-8l9-14c2-2 1-4 0-6l-12-29c-3-8-6-7-9-7h-8c-2 0-6 1-10 5-22 22-13 53 3 73 3 4 23 40 66 59 32 14 39 12 48 10 11-1 22-10 27-19 1-3 6-16 2-18"/></svg>
+      </a>
+      <a href="mailto:demo@example.com" target="_blank" class="social__item_link" aria-label="Gmail">
+        <svg viewBox="0 0 32 32">
+          <path d="M16.58,19.1068l-12.69-8.0757A3,3,0,0,1,7.1109,5.97l9.31,5.9243L24.78,6.0428A3,3,0,0,1,28.22,10.9579Z" fill="#ea4435" />
+          <path d="M25.5,5.5h4a0,0,0,0,1,0,0v18a3,3,0,0,1-3,3h0a3,3,0,0,1-3-3V7.5a2,2,0,0,1,2-2Z" fill="#00ac47" transform="translate(53.0001 32.0007) rotate(180)" />
+          <path d="M29.4562,8.0656c-.0088-.06-.0081-.1213-.0206-.1812-.0192-.0918-.0549-.1766-.0823-.2652a2.9312,2.9312,0,0,0-.0958-.2993c-.02-.0475-.0508-.0892-.0735-.1354A2.9838,2.9838,0,0,0,28.9686,6.8c-.04-.0581-.09-.1076-.1342-.1626a3.0282,3.0282,0,0,0-.2455-.2849c-.0665-.0647-.1423-.1188-.2146-.1771a3.02,3.02,0,0,0-.24-.1857c-.0793-.0518-.1661-.0917-.25-.1359-.0884-.0461-.175-.0963-.267-.1331-.0889-.0358-.1837-.0586-.2766-.0859s-.1853-.06-.2807-.0777a3.0543,3.0543,0,0,0-.357-.036c-.0759-.0053-.1511-.0186-.2273-.018a2.9778,2.9778,0,0,0-.4219.0425c-.0563.0084-.113.0077-.1689.0193a33.211,33.211,0,0,0-.5645.178c-.0515.022-.0966.0547-.1465.0795A2.901,2.901,0,0,0,23.5,8.5v5.762l4.72-3.3043a2.8878,2.8878,0,0,0,1.2359-2.8923Z" fill="#ffba00" />
+          <path d="M5.5,5.5h0a3,3,0,0,1,3,3v18a0,0,0,0,1,0,0h-4a2,2,0,0,1-2-2V8.5a3,3,0,0,1,3-3Z" fill="#4285f4" />
+          <path d="M2.5439,8.0656c.0088-.06.0081-.1213.0206-.1812.0192-.0918.0549-.1766.0823-.2652A2.9312,2.9312,0,0,1,2.7426,7.32c.02-.0475.0508-.0892.0736-.1354A2.9719,2.9719,0,0,1,3.0316,6.8c.04-.0581.09-.1076.1342-.1626a3.0272,3.0272,0,0,1,.2454-.2849c.0665-.0647.1423-.1188.2147-.1771a3.0005,3.0005,0,0,1,.24-.1857c.0793-.0518.1661-.0917.25-.1359A2.9747,2.9747,0,0,1,4.3829,5.72c.089-.0358.1838-.0586.2766-.0859s.1853-.06.2807-.0777a3.0565,3.0565,0,0,1,.357-.036c.076-.0053.1511-.0186.2273-.018a2.9763,2.9763,0,0,1,.4219.0425c.0563.0084.113.0077.169.0193a2.9056,2.9056,0,0,1,.286.0888,2.9157,2.9157,0,0,1,.2785.0892c.0514.022.0965.0547.1465.0795a2.9745,2.9745,0,0,1,.3742.21A2.9943,2.9943,0,0,1,8.5,8.5v5.762L3.78,10.9579A2.8891,2.8891,0,0,1,2.5439,8.0656Z" fill="#c52528" />
+        </svg>
+      </a>
+    </div>
+    <button class="messenger-fab" aria-label="Связаться с нами">
+      <svg class="icon-chat" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.477 2 2 6.029 2 11c0 2.84 1.48 5.371 3.792 7.025C5.46 19.345 4.18 21.05 4.103 21.157a.5.5 0 0 0 .344.81c.068.01.137.014.205.014 1.706 0 3.398-.636 4.706-1.503C10.22 20.817 11.096 21 12 21c5.523 0 10-4.029 10-9s-4.477-9-10-9z"/>
+      </svg>
+      <svg class="icon-close" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <!-- Интегрированный Vanilla JS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      
+      // Инициализация Swiper
+      const swiper = new Swiper('.reviews__slider', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        grabCursor: true, 
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 }
+        }
+      });
+
+      // Логика FAB мессенджеров
+      const messengerFab = document.querySelector('.messenger-fab');
+      const messengerWidget = document.getElementById('messengerWidget');
+      
+      messengerFab.addEventListener('click', () => {
+        messengerWidget.classList.toggle('open');
+      });
+
+      // Закрытие FAB при клике в пустое место
+      document.addEventListener('click', (e) => {
+        if (!messengerWidget.contains(e.target)) {
+          messengerWidget.classList.remove('open');
+        }
+      });
+
+      // Логика модальных окон
+      const popUp = document.getElementById('pop_up');
+      const form = document.getElementById('mailForm');
+      const serviceInput = document.getElementById('service');
+      const answerDiv = document.querySelector('.answer');
+
+      const toggleModal = (modal, forceClose = false) => {
+        if (forceClose || modal.classList.contains('active')) {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+          
+          if (modal === popUp) { form.reset(); answerDiv.innerHTML = ''; }
+        } else {
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden'; 
+        }
+      };
+
+      // Открытие попапов
+      document.getElementById('open_pop_up').addEventListener('click', e => {
+        e.preventDefault();
+        serviceInput.value = '';
+        serviceInput.removeAttribute('disabled');
+        toggleModal(popUp);
+      });
+
+      document.querySelectorAll('.card__button').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.preventDefault();
+          serviceInput.value = btn.getAttribute('data-service');
+          toggleModal(popUp);
+        });
+      });
+
+      // Закрытие попапа формы
+      document.querySelectorAll('#pop_up_close, #pop_up_bg').forEach(el => {
+        el.addEventListener('click', () => toggleModal(popUp, true));
+      });
+
+      // Закрытие по ESC
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          toggleModal(popUp, true);
+          if (document.activeElement) {
+            document.activeElement.blur();
+          }
+        }
+      });
+
+      // Бургер меню
+      const burgerBtn = document.querySelector('.burger-menu_button');
+      const burgerMenu = document.querySelector('.burger-menu');
+      const burgerLinks = document.querySelectorAll('.burger-menu_link, .burger-menu_overlay');
+
+      const toggleBurger = () => {
+        burgerMenu.classList.toggle('burger-menu_active');
+        document.body.style.overflow = burgerMenu.classList.contains('burger-menu_active') ? 'hidden' : '';
+      };
+
+      burgerBtn.addEventListener('click', e => { e.preventDefault(); toggleBurger(); });
+      burgerLinks.forEach(link => link.addEventListener('click', () => toggleBurger()));
+
+      // Плавный скролл к якорям
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          if(this.getAttribute('href').length > 1) { 
+             e.preventDefault();
+             const target = document.querySelector(this.getAttribute('href'));
+             if (target) {
+               const topOffset = target.getBoundingClientRect().top + window.scrollY - 90;
+               window.scrollTo({ top: topOffset, behavior: 'smooth' });
+             }
+          }
+        });
+      });
+
+      // Отправка формы через Web3Forms (https://web3forms.com)
+      // Чтобы форма реально доставляла письма — получите access_key на web3forms.com
+      // (подтверждение email, без регистрации) и вставьте его ниже.
+      const WEB3FORMS_ACCESS_KEY = '2bca9bca-f966-4a10-b670-b2b7587da2b8';
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const sendBtn = document.getElementById('sendMail');
+        answerDiv.innerHTML = 'Отправка...';
+        sendBtn.disabled = true;
+
+        const formData = new FormData(form);
+        formData.append('access_key', WEB3FORMS_ACCESS_KEY);
+        formData.append('subject', 'Omega — заявка с сайта (демо)');
+        formData.append('from_name', 'Omega Demo');
+
+        try {
+          const response = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
+          const data = await response.json();
+
+          if (data.success) {
+            answerDiv.innerHTML = "<span style='color: #14d314;'>Заявка успешно отправлена!</span>";
+            form.reset();
+            setTimeout(() => toggleModal(popUp, true), 3000);
+          } else {
+            answerDiv.innerHTML = "<span style='color: #FF4053;'>" + (data.message || 'Не удалось отправить заявку.') + "</span>";
+          }
+        } catch (error) {
+          answerDiv.innerHTML = "<span style='color: #FF4053;'>Ошибка соединения. Попробуйте позже.</span>";
+        } finally {
+          sendBtn.disabled = false;
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>
