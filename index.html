@@ -50,14 +50,19 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; }
-    
+
     html {
       scrollbar-gutter: stable;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
     }
 
     body {
       font-family: var(--font-main);
       margin: 0;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       line-height: 1.5;
       color: var(--text-dark);
       overflow-x: hidden;
@@ -108,15 +113,18 @@
       font-size: 17px; font-weight: 600; text-align: center; color: var(--text-light);
       padding: 12px 20px; background-color: var(--primary-color); border-radius: 12px; transition: var(--transition); border: none; cursor: pointer;
     }
-    .btn-request:hover {
-      color: var(--primary-color); background-color: var(--text-light); box-shadow: 0px 0px 20px 5px rgba(255, 255, 255, 0.5);
+    @media (hover: hover) {
+      .btn-request:hover {
+        color: var(--primary-color); background-color: var(--text-light); box-shadow: 0px 0px 20px 5px rgba(255, 255, 255, 0.5);
+      }
     }
 
     /* Hero Section */
-    .block__1 { position: relative; height: 100dvh; overflow: hidden; }
+    .block__1 { position: relative; height: 100vh; height: 100dvh; overflow: hidden; }
     .page__bg {
       position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1;
       transform: scale(1.8); animation: scaleImage 3s ease-out forwards; top: 0; left: 0;
+      will-change: transform;
     }
     .block__1_page { height: 100%; position: relative;}
     .page__title {
@@ -261,10 +269,12 @@
       transition: var(--transition);
     }
     .swiper-button-next:after, .swiper-button-prev:after { font-size: 20px; font-weight: 700; }
-    .swiper-button-next:hover, .swiper-button-prev:hover {
-      color: var(--primary-color);
-      background: var(--text-light);
-      box-shadow: 0px 0px 20px 5px rgba(255, 255, 255, 0.5);
+    @media (hover: hover) {
+      .swiper-button-next:hover, .swiper-button-prev:hover {
+        color: var(--primary-color);
+        background: var(--text-light);
+        box-shadow: 0px 0px 20px 5px rgba(255, 255, 255, 0.5);
+      }
     }
 
     /* Contacts */
@@ -314,6 +324,7 @@
     
     .pop_up_body input, .pop_up_body textarea {
       width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #fff; font-size: 16px; font-weight: 500; font-family: var(--font-main);
+      -webkit-appearance: none; appearance: none;
     }
     .pop_up_body textarea { height: 140px; resize: none; }
     .pop_up_body input:focus, .pop_up_body textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0px 5px 20px 5px rgba(0, 0, 0, 0.1); }
@@ -321,6 +332,7 @@
     .pop_up_body button {
       width: 100%; padding: 15px; background: rgba(22, 44, 189, 0.63); color: white; font-size: 18px; font-weight: 600;
       border: none; border-radius: 12px; cursor: pointer; transition: var(--transition); margin-top: 10px;
+      -webkit-appearance: none; appearance: none;
     }
     .pop_up_body button:hover:not(:disabled) { background: var(--primary-color); box-shadow: 0px 10px 14px rgba(0, 0, 0, 0.21);}
     .pop_up_body button:disabled { opacity: 0.7; cursor: not-allowed; }
@@ -345,29 +357,31 @@
       display: flex; justify-content: center; align-items: center;
       cursor: pointer; border: none; outline: none;
       box-shadow: 0 4px 15px rgba(22, 44, 189, 0.4);
-      animation: pulse-blue 2s infinite;
       transition: var(--transition);
       position: relative;
+      -webkit-appearance: none;
+      appearance: none;
+      transform: translateZ(0);
     }
     .messenger-fab .icon-chat { opacity: 1; position: absolute; transition: 0.3s ease; width: 30px; height: 30px; fill: #fff; }
     .messenger-fab .icon-close { opacity: 0; position: absolute; transition: 0.3s ease; transform: rotate(-90deg); width: 30px; height: 30px; color: #fff;}
 
     .messenger-widget.open .messenger-fab {
-      animation: none;
       background-color: #FF4053;
       box-shadow: 0 4px 15px rgba(255, 64, 83, 0.4);
     }
     .messenger-widget.open .messenger-fab .icon-chat { opacity: 0; transform: rotate(90deg); }
     .messenger-widget.open .messenger-fab .icon-close { opacity: 1; transform: rotate(0); }
 
-    .messenger-fab:hover,
-    .messenger-widget.open .messenger-fab:hover {
-      animation: none;
-      background-color: var(--text-light);
-      box-shadow: 0px 0px 20px 5px rgba(255, 255, 255, 0.5);
+    @media (hover: hover) {
+      .messenger-fab:hover,
+      .messenger-widget.open .messenger-fab:hover {
+        background-color: var(--text-light);
+        box-shadow: 0px 0px 20px 5px rgba(255, 255, 255, 0.5);
+      }
+      .messenger-fab:hover .icon-chat { fill: var(--primary-color); }
+      .messenger-fab:hover .icon-close { color: var(--primary-color); }
     }
-    .messenger-fab:hover .icon-chat { fill: var(--primary-color); }
-    .messenger-fab:hover .icon-close { color: var(--primary-color); }
 
     .messenger-links {
       position: absolute;
@@ -390,12 +404,6 @@
     }
     .messenger-links .social__item_link svg { width: 50px; height: 50px; display: block; }
     
-    @keyframes pulse-blue {
-      0% { box-shadow: 0 0 0 0 rgba(22, 44, 189, 0.7); }
-      70% { box-shadow: 0 0 0 15px rgba(22, 44, 189, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(22, 44, 189, 0); }
-    }
-
     /* Mobile Menu */
     .burger-menu { display: none; }
     .burger-menu_button {
@@ -471,6 +479,18 @@
       .contacts__item_content { margin-left: 15px; }
       .pop_up_body { width: 300px; padding: 25px 15px; }
       .pop_up_close { top: 0px; right: 5px; font-size: 25px; color: #fff;}
+    }
+
+    /* Respect user motion preferences (iOS Settings → Accessibility → Reduce Motion) */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+      .page__bg { transform: none; }
+      .page__title { opacity: 1; }
     }
   </style>
 </head>
