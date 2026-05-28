@@ -321,10 +321,6 @@
       bottom: calc(20px + env(safe-area-inset-bottom, 0px));
       left: 20px;
       z-index: 9999;
-      display: flex;
-      flex-direction: column-reverse;
-      align-items: center;
-      gap: 15px;
     }
     .messenger-fab {
       width: 60px; height: 60px;
@@ -339,33 +335,35 @@
     }
     .messenger-fab .icon-chat { opacity: 1; position: absolute; transition: 0.3s ease; width: 30px; height: 30px; fill: #fff; }
     .messenger-fab .icon-close { opacity: 0; position: absolute; transition: 0.3s ease; transform: rotate(-90deg); width: 30px; height: 30px; color: #fff;}
-    
+
     .messenger-widget.open .messenger-fab {
       animation: none;
-      background-color: #FF4053; 
+      background-color: #FF4053;
       box-shadow: 0 4px 15px rgba(255, 64, 83, 0.4);
     }
     .messenger-widget.open .messenger-fab .icon-chat { opacity: 0; transform: rotate(90deg); }
     .messenger-widget.open .messenger-fab .icon-close { opacity: 1; transform: rotate(0); }
 
     .messenger-links {
+      position: absolute;
+      bottom: 75px;
+      left: 5px;
       display: flex; flex-direction: column; gap: 12px;
-      opacity: 0; visibility: hidden;
+      opacity: 0; visibility: hidden; pointer-events: none;
       transform: translateY(20px) scale(0.8);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       transform-origin: bottom center;
     }
     .messenger-widget.open .messenger-links {
-      opacity: 1; visibility: visible; transform: translateY(0) scale(1);
+      opacity: 1; visibility: visible; pointer-events: auto;
+      transform: translateY(0) scale(1);
     }
     .messenger-links .social__item_link {
       width: 50px; height: 50px;
-      background: #fff; border-radius: 50%;
       display: flex; justify-content: center; align-items: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      filter: none;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));
     }
-    .messenger-links .social__item_link svg { width: 35px; height: 35px; }
+    .messenger-links .social__item_link svg { width: 50px; height: 50px; display: block; }
     
     @keyframes pulse-blue {
       0% { box-shadow: 0 0 0 0 rgba(22, 44, 189, 0.7); }
