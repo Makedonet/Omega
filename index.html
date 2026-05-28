@@ -362,12 +362,6 @@
     body:has(.burger-menu.burger-menu_active) .messenger-widget {
       opacity: 0; visibility: hidden; pointer-events: none;
     }
-    /* Прячем FAB на время скролла — обходим iOS Safari URL-bar jitter,
-       пользователь не видит компенсационный сдвиг fixed-элементов */
-    .messenger-widget.is-scrolling {
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.15s ease;
-    }
     .messenger-fab {
       width: 60px; height: 60px;
       background-color: var(--primary-color);
@@ -1168,19 +1162,6 @@
           messengerWidget.classList.remove('open');
         }
       });
-
-      // Скрываем FAB во время скролла — обходит iOS Safari URL-bar jitter.
-      // Пользователь не видит как Safari переанимирует position:fixed элементы
-      // при появлении/исчезновении нижнего URL-бара.
-      let scrollIdleTimer;
-      window.addEventListener('scroll', () => {
-        messengerWidget.classList.add('is-scrolling');
-        messengerWidget.classList.remove('open'); // закрываем подменю если было открыто
-        clearTimeout(scrollIdleTimer);
-        scrollIdleTimer = setTimeout(() => {
-          messengerWidget.classList.remove('is-scrolling');
-        }, 200);
-      }, { passive: true });
 
       // Логика модальных окон
       const popUp = document.getElementById('pop_up');
