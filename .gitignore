@@ -1,0 +1,11 @@
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Vercel local cache
+.vercel/
+
+# Локальные заметки для ассистента
+CLAUDE.md
