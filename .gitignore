@@ -4,8 +4,9 @@
 .DS_Store
 Thumbs.db
 
-# Vercel local cache
+# Vercel: локальная привязка проекта и выданные токены
 .vercel/
+.env*
 
 # Локальные заметки для ассистента
 CLAUDE.md
