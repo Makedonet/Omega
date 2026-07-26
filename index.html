@@ -29,6 +29,11 @@
   <meta name="twitter:image" content="https://omegadet.vercel.app/img/og-image.jpg">
   <link rel="canonical" href="https://omegadet.vercel.app/">
   
+  <!-- Фон — LCP-элемент. Preload запускает загрузку до разбора <body>;
+       media повторяет условие из <picture>, поэтому качается ровно один файл. -->
+  <link rel="preload" as="image" href="img/BG.webp" media="(min-width: 481px)" fetchpriority="high">
+  <link rel="preload" as="image" href="img/BG_mobile.webp" media="(max-width: 480px)" fetchpriority="high">
+
   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -604,7 +609,7 @@
 </head>
 
 <body>
-  <a href="#about" class="skip-link">Перейти к содержанию</a>
+  <a href="#main" class="skip-link">Перейти к содержанию</a>
 
   <!-- Header -->
   <header class="header">
@@ -640,6 +645,8 @@
       </div>
     </div>
   </header>
+
+  <main id="main">
 
   <!-- Hero Section -->
   <section class="block__1" id="mainNav2">
@@ -1153,6 +1160,8 @@
       </div>
     </div>
   </section>
+
+  </main>
 
   <footer class="footer">
     <div class="container">
